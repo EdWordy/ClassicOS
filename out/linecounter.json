@@ -1,0 +1,106 @@
+{
+    "extension": "linecounter",
+    "version": "0.2.7",
+    "workspace": "e:\\Games Library\\Game Dev\\Love2d\\ClassicOS",
+    "linecount": [
+        {
+            "version": "0.2.7",
+            "counttime": "2024-08-08 06:51:04",
+            "filesum": 12,
+            "codesum": 595,
+            "commentsum": 0,
+            "blanksum": 63,
+            "statistics": {
+                ".lua": {
+                    "code": 593,
+                    "comment": 0,
+                    "blank": 63
+                },
+                ".txt": {
+                    "code": 2,
+                    "comment": 0,
+                    "blank": 0
+                }
+            },
+            "filelist": [
+                {
+                    "blank": 7,
+                    "code": 77,
+                    "comment": 0,
+                    "filename": "boot_sequence.lua"
+                },
+                {
+                    "blank": 15,
+                    "code": 134,
+                    "comment": 0,
+                    "filename": "code_editor.lua"
+                },
+                {
+                    "blank": 10,
+                    "code": 59,
+                    "comment": 0,
+                    "filename": "file_system.lua"
+                },
+                {
+                    "filename": "fonts\\courier.ttf",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 6,
+                    "code": 29,
+                    "comment": 0,
+                    "filename": "main.lua"
+                },
+                {
+                    "filename": "sounds\\boot.wav",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "sounds\\error.wav",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "sounds\\hum.wav",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "sounds\\keypress.wav",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 0,
+                    "code": 2,
+                    "comment": 0,
+                    "filename": "system\\file.txt"
+                },
+                {
+                    "blank": 15,
+                    "code": 216,
+                    "comment": 0,
+                    "filename": "terminal.lua"
+                },
+                {
+                    "blank": 10,
+                    "code": 78,
+                    "comment": 0,
+                    "filename": "window.lua"
+                }
+            ]
+        }
+    ]
+}

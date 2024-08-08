@@ -1,0 +1,30 @@
+===============================================================================
+EXTENSION NAME : linecounter
+EXTENSION VERSION : 0.2.7
+-------------------------------------------------------------------------------
+count time : 2024-08-08 06:51:04
+count workspace : e:\Games Library\Game Dev\Love2d\ClassicOS
+total files : 12
+total code lines : 595
+total comment lines : 0
+total blank lines : 63
+
+    statistics
+   |      extension|     total code|  total comment|    total blank|percent|
+   -------------------------------------------------------------------------
+   |           .lua|            593|              0|             63| 1.0e+2|
+   |           .txt|              2|              0|              0|   0.34|
+   -------------------------------------------------------------------------
+boot_sequence.lua, code is 77, comment is 0, blank is 7.
+code_editor.lua, code is 134, comment is 0, blank is 15.
+file_system.lua, code is 59, comment is 0, blank is 10.
+fonts\courier.ttf, it is a binary file.
+main.lua, code is 29, comment is 0, blank is 6.
+sounds\boot.wav, it is a binary file.
+sounds\error.wav, it is a binary file.
+sounds\hum.wav, it is a binary file.
+sounds\keypress.wav, it is a binary file.
+system\file.txt, code is 2, comment is 0, blank is 0.
+terminal.lua, code is 216, comment is 0, blank is 15.
+window.lua, code is 78, comment is 0, blank is 10.
+===============================================================================
