@@ -28,3 +28,38 @@ system\file.txt, code is 2, comment is 0, blank is 0.
 terminal.lua, code is 216, comment is 0, blank is 15.
 window.lua, code is 78, comment is 0, blank is 10.
 ===============================================================================
+===============================================================================
+EXTENSION NAME : linecounter
+EXTENSION VERSION : 0.2.7
+-------------------------------------------------------------------------------
+count time : 2024-08-08 11:49:06
+count workspace : e:\Games Library\Game Dev\Love2d\ClassicOS
+total files : 17
+total code lines : 927
+total comment lines : 0
+total blank lines : 114
+
+    statistics
+   |      extension|     total code|  total comment|    total blank|percent|
+   -------------------------------------------------------------------------
+   |           .lua|            925|              0|            113| 1.0e+2|
+   |           .txt|              2|              0|              1|   0.22|
+   -------------------------------------------------------------------------
+assets\editor_icon.png, it is a binary file.
+assets\file_browser_icon.png, it is a binary file.
+assets\fonts\courier.ttf, it is a binary file.
+assets\sounds\boot.wav, it is a binary file.
+assets\sounds\error.wav, it is a binary file.
+assets\sounds\hum.wav, it is a binary file.
+assets\sounds\keypress.wav, it is a binary file.
+assets\terminal_icon.png, it is a binary file.
+lua\boot_sequence.lua, code is 76, comment is 0, blank is 7.
+lua\code_editor.lua, code is 140, comment is 0, blank is 16.
+lua\desktop.lua, code is 82, comment is 0, blank is 9.
+lua\file_browser.lua, code is 95, comment is 0, blank is 12.
+lua\file_system.lua, code is 59, comment is 0, blank is 10.
+lua\terminal.lua, code is 215, comment is 0, blank is 15.
+lua\window.lua, code is 123, comment is 0, blank is 17.
+main.lua, code is 135, comment is 0, blank is 27.
+system\file.txt, code is 2, comment is 0, blank is 1.
+===============================================================================

@@ -1,4 +1,3 @@
--- boot_sequence.lua
 local bootSequence = {
     "Initializing ClassicOS v1.8...",
     "Checking system integrity...OK",

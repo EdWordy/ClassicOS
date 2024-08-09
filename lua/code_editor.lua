@@ -1,3 +1,5 @@
+local FileSystem = require "lua/file_system"
+
 CodeEditor = {}
 CodeEditor.__index = CodeEditor
 
@@ -9,7 +11,13 @@ function CodeEditor.new(font)
     self.scrollY = 0
     self.filename = ""
     self.font = font
-    self.lineNumberWidth = 30  -- Width for line numbers
+    self.lineNumberWidth = 30
+    self.statusMessage = ""
+    self.statusMessageTimer = 0
+    self.x = 0
+    self.y = 0
+    self.width = 0
+    self.height = 0
     return self
 end
 
@@ -46,10 +54,21 @@ function CodeEditor:draw(x, y, width, height)
             y + (self.cursorY - self.scrollY - 1) * lineHeight, 
             2, lineHeight)
     end
+
+    -- Draw status message
+    if self.statusMessageTimer > 0 then
+        love.graphics.setColor(1, 1, 1)
+        love.graphics.printf(self.statusMessage, x, y + height - 25, width, "center")
+    end
 end
 
 function CodeEditor:update(dt)
-    -- Add any necessary update logic here
+    if self.statusMessageTimer > 0 then
+        self.statusMessageTimer = self.statusMessageTimer - dt
+        if self.statusMessageTimer <= 0 then
+            self.statusMessage = ""
+        end
+    end
 end
 
 function CodeEditor:keypressed(key)
@@ -122,35 +141,33 @@ function CodeEditor:backspace()
 end
 
 function CodeEditor:save()
-    local path = getFullPath(currentDirectory .. "/" .. self.filename)
     local content = table.concat(self.content, "\n")
-    local success, err = love.filesystem.write(path, content)
+    local success, err = FileSystem.writeFile(self.filename, content)
     if success then
-        print("File saved successfully")
+        self.statusMessage = "File saved successfully!"
+        self.statusMessageTimer = 3
+        print("File saved successfully: " .. self.filename)
     else
-        print("Error saving file: " .. (err or "Unknown error"))
+        self.statusMessage = "Error saving file: " .. (err or "Unknown error")
+        self.statusMessageTimer = 3
+        print("Error saving file: " .. self.filename .. " - " .. (err or "Unknown error"))
     end
 end
 
-function CodeEditor:load(filename)
-    local path = getFullPath(currentDirectory .. "/" .. filename)
-    local content, err = love.filesystem.read(path)
-    if content then
-        self.content = {}
-        for line in content:gmatch("[^\r\n]+") do
-            table.insert(self.content, line)
-        end
-        if #self.content == 0 then
-            self.content = {""}
-        end
-        self.filename = filename
-        self.cursorX = 1
-        self.cursorY = 1
-        self.scrollY = 0
-        return true
-    else
-        return false, err
+function CodeEditor:loadContent(filename, content)
+    self.filename = filename
+    self.content = {}
+    for line in (content .. "\n"):gmatch("([^\r\n]*)[\r\n]") do
+        table.insert(self.content, line)
     end
+    if #self.content == 0 then
+        self.content = {""}
+    end
+    self.cursorX = 1
+    self.cursorY = 1
+    self.scrollY = 0
+    print("CodeEditor loaded content for: " .. filename)
+    print("Number of lines: " .. #self.content)
 end
 
 return CodeEditor

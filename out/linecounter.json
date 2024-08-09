@@ -101,6 +101,138 @@
                     "filename": "window.lua"
                 }
             ]
+        },
+        {
+            "version": "0.2.7",
+            "counttime": "2024-08-08 11:49:06",
+            "filesum": 17,
+            "codesum": 927,
+            "commentsum": 0,
+            "blanksum": 114,
+            "statistics": {
+                ".lua": {
+                    "code": 925,
+                    "comment": 0,
+                    "blank": 113
+                },
+                ".txt": {
+                    "code": 2,
+                    "comment": 0,
+                    "blank": 1
+                }
+            },
+            "filelist": [
+                {
+                    "filename": "assets\\editor_icon.png",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "assets\\file_browser_icon.png",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "assets\\fonts\\courier.ttf",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "assets\\sounds\\boot.wav",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "assets\\sounds\\error.wav",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "assets\\sounds\\hum.wav",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "assets\\sounds\\keypress.wav",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "filename": "assets\\terminal_icon.png",
+                    "isbinaryfile": true,
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0
+                },
+                {
+                    "blank": 7,
+                    "code": 76,
+                    "comment": 0,
+                    "filename": "lua\\boot_sequence.lua"
+                },
+                {
+                    "blank": 16,
+                    "code": 140,
+                    "comment": 0,
+                    "filename": "lua\\code_editor.lua"
+                },
+                {
+                    "blank": 9,
+                    "code": 82,
+                    "comment": 0,
+                    "filename": "lua\\desktop.lua"
+                },
+                {
+                    "blank": 12,
+                    "code": 95,
+                    "comment": 0,
+                    "filename": "lua\\file_browser.lua"
+                },
+                {
+                    "blank": 10,
+                    "code": 59,
+                    "comment": 0,
+                    "filename": "lua\\file_system.lua"
+                },
+                {
+                    "blank": 15,
+                    "code": 215,
+                    "comment": 0,
+                    "filename": "lua\\terminal.lua"
+                },
+                {
+                    "blank": 17,
+                    "code": 123,
+                    "comment": 0,
+                    "filename": "lua\\window.lua"
+                },
+                {
+                    "blank": 27,
+                    "code": 135,
+                    "comment": 0,
+                    "filename": "main.lua"
+                },
+                {
+                    "blank": 1,
+                    "code": 2,
+                    "comment": 0,
+                    "filename": "system\\file.txt"
+                }
+            ]
         }
     ]
 }

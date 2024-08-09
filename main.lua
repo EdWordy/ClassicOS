@@ -1,9 +1,10 @@
-require "window"
-require "code_editor"
-require "file_system"
-require "terminal"
-require "boot_sequence"
-local Desktop = require "desktop"
+local FileSystem = require "lua/file_system"
+require "lua/window"
+require "lua/code_editor"
+require "lua/terminal"
+require "lua/boot_sequence"
+local Desktop = require "lua/desktop"
+local FileBrowser = require "lua/file_browser"
 
 -- Global variables
 local windows = {}
@@ -26,15 +27,20 @@ function love.load()
     updateFont()
     
     -- Load sound effects
-    keyPressSound = love.audio.newSource("sounds/keypress.wav", "static")
-    bootSound = love.audio.newSource("sounds/boot.wav", "static")
-    errorSound = love.audio.newSource("sounds/error.wav", "static")
-    backgroundHum = love.audio.newSource("sounds/hum.wav", "stream")
+    keyPressSound = love.audio.newSource("assets/sounds/keypress.wav", "static")
+    bootSound = love.audio.newSource("assets/sounds/boot.wav", "static")
+    errorSound = love.audio.newSource("assets/sounds/error.wav", "static")
+    backgroundHum = love.audio.newSource("assets/sounds/hum.wav", "stream")
     backgroundHum:setLooping(true)
     love.audio.play(backgroundHum)
 
     -- Create the root directory if it doesn't exist
-    love.filesystem.createDirectory(rootDirectory)
+    if not love.filesystem.getInfo(FileSystem.rootDirectory) then
+        local success, message = love.filesystem.createDirectory(FileSystem.rootDirectory)
+        if not success then
+            error("Failed to create root directory: " .. message)
+        end
+    end
     
     -- Play boot sound
     love.audio.play(bootSound)
@@ -70,9 +76,10 @@ function love.draw()
     else
         Desktop.draw()
         -- Draw windows
-        for i, window in ipairs(windows) do
-            window:draw()
+        for i = 1, #windows do
+            windows[i]:draw()
         end
+        Desktop.drawTaskbarItems(windows)
     end
     
     -- Draw clock if enabled
@@ -85,35 +92,55 @@ end
 function love.mousepressed(x, y, button)
     if isBooting() then return end
 
-    if Desktop.mousepressed(x, y, button) then
+    local desktopAction = Desktop.mousepressed(x, y, button)
+    if type(desktopAction) == "number" then
+        -- Taskbar item clicked
+        if windows[desktopAction] then
+            windows[desktopAction].isMinimized = false
+            activeWindow = windows[desktopAction]
+            -- Move window to top
+            table.insert(windows, table.remove(windows, desktopAction))
+        end
+        return
+    elseif desktopAction then
         return  -- If the desktop handled the click, we're done
     end
 
     if button == 1 then  -- Left mouse button
         for i = #windows, 1, -1 do
             local window = windows[i]
-            if window:checkCloseButtonHover(x, y) then
-                table.remove(windows, i)
-                if #windows > 0 then
-                    activeWindow = windows[#windows]
-                else
-                    activeWindow = nil
+            if not window.isMinimized then
+                if window:checkCloseButtonHover(x, y) then
+                    table.remove(windows, i)
+                    if #windows > 0 then
+                        activeWindow = windows[#windows]
+                    else
+                        activeWindow = nil
+                    end
+                    return
+                elseif window:checkMinimizeButtonHover(x, y) then
+                    window.isMinimized = true
+                    if activeWindow == window then
+                        activeWindow = #windows > 1 and windows[#windows - 1] or nil
+                    end
+                    return
+                elseif window:checkTitleBarHover(x, y) then
+                    window.isDragging = true
+                    window.dragOffsetX = x - window.x
+                    window.dragOffsetY = y - window.y
+                    
+                    -- Move this window to the end of the list (top of the draw order)
+                    table.insert(windows, table.remove(windows, i))
+                    
+                    activeWindow = window
+                    break
+                elseif window:checkHover(x, y) then
+                    activeWindow = window
+                    -- Move this window to the end of the list (top of the draw order)
+                    table.insert(windows, table.remove(windows, i))
+                    window:mousepressed(x, y, button)
+                    break
                 end
-                return  -- Exit the function after closing a window
-            elseif window:checkTitleBarHover(x, y) then
-                window.isDragging = true
-                window.dragOffsetX = x - window.x
-                window.dragOffsetY = y - window.y
-                
-                -- Move this window to the end of the list (top of the draw order)
-                table.remove(windows, i)
-                table.insert(windows, window)
-                
-                activeWindow = window
-                break
-            elseif window:checkHover(x, y) then
-                activeWindow = window
-                break
             end
         end
     end
@@ -169,7 +196,7 @@ function love.wheelmoved(x, y)
 end
 
 function updateFont()
-    font = love.graphics.newFont("fonts/courier.ttf", fontSize)
+    font = love.graphics.newFont("assets/fonts/courier.ttf", fontSize)
     love.graphics.setFont(font)
 end
 
@@ -186,13 +213,25 @@ function updateClock()
     end
 end
 
-function launchEditor(filename)
+function launchEditor(filename, content)
     local editorWindow = Window.new("Editor - " .. filename, 150, 150, 500, 400, "editor", font)
     table.insert(windows, editorWindow)
     activeWindow = editorWindow
-    activeWindow.editor:load(filename)
+    
+    if editorWindow.editor then
+        editorWindow.editor:loadContent(filename, content or "")
+    else
+        print("Error: Editor not initialized properly")
+    end
+end
+
+function launchFileBrowser()
+    local fileBrowserWindow = Window.new("File Browser", 200, 200, 400, 300, "file_browser", font)
+    table.insert(windows, fileBrowserWindow)
+    activeWindow = fileBrowserWindow
 end
 
 -- Make these functions global so they can be called from desktop.lua
 _G.launchTerminal = launchTerminal
 _G.launchEditor = launchEditor
+_G.launchFileBrowser = launchFileBrowser

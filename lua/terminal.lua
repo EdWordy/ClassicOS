@@ -1,4 +1,5 @@
--- terminal.lua
+local FileSystem = require "lua/file_system"
+
 Terminal = {}
 Terminal.__index = Terminal
 
@@ -128,9 +129,7 @@ function Terminal:executeCommand(cmd)
     
     if args[1] == "help" then
         self:addContent("Available commands:", 2)
-        self:addContent("help, clear, echo, exit", 2)
-        self:addContent("date, time, color", 2)
-        self:addContent("ls, cd, pwd, cat, mkdir, touch, rm, edit", 2)
+        self:addContent("help, clear, echo, exit, date, time, color, ls, cd, pwd, cat, mkdir, touch, rm", 2)
     elseif args[1] == "clear" then
         self.content = {}
         self.scrollOffset = 0
@@ -151,7 +150,7 @@ function Terminal:executeCommand(cmd)
             self:addContent("Invalid color. Choose a number between 1 and " .. #terminalColors, 4)
         end
     elseif args[1] == "ls" then
-        local items, err = listDirectory(args[2] or currentDirectory)
+        local items, err = FileSystem.listDirectory(args[2] or FileSystem.currentDirectory)
         if items then
             for _, item in ipairs(items) do
                 if item.type == "directory" then
@@ -164,17 +163,17 @@ function Terminal:executeCommand(cmd)
             self:addContent(err, 4)
         end
     elseif args[1] == "cd" then
-        local success, err = changeDirectory(args[2] or "/")
+        local success, err = FileSystem.changeDirectory(args[2] or "/")
         if success then
-            self:addContent("Current directory: " .. currentDirectory, 2)
+            self:addContent("Current directory: " .. FileSystem.currentDirectory, 2)
         else
             self:addContent(err, 4)
         end
     elseif args[1] == "pwd" then
-        self:addContent(currentDirectory, 2)
+        self:addContent(FileSystem.currentDirectory, 2)
     elseif args[1] == "cat" then
         if args[2] then
-            local content, err = readFile(args[2])
+            local content, err = FileSystem.readFile(args[2])
             if content then
                 self:addContent("Contents of " .. args[2] .. ":", 2)
                 self:addContent(content)
@@ -186,7 +185,7 @@ function Terminal:executeCommand(cmd)
         end
     elseif args[1] == "mkdir" then
         if args[2] then
-            local success, err = makeDirectory(args[2])
+            local success, err = FileSystem.makeDirectory(args[2])
             if success then
                 self:addContent("Directory created: " .. args[2], 2)
             else
@@ -197,7 +196,7 @@ function Terminal:executeCommand(cmd)
         end
     elseif args[1] == "touch" then
         if args[2] then
-            local success, err = writeFile(args[2], "")
+            local success, err = FileSystem.writeFile(args[2], "")
             if success then
                 self:addContent("File created: " .. args[2], 2)
             else
@@ -208,7 +207,7 @@ function Terminal:executeCommand(cmd)
         end
     elseif args[1] == "rm" then
         if args[2] then
-            local success, err = removeFile(args[2])
+            local success, err = FileSystem.removeFile(args[2])
             if success then
                 self:addContent("File removed: " .. args[2], 2)
             else
@@ -217,15 +216,10 @@ function Terminal:executeCommand(cmd)
         else
             self:addContent("Usage: rm <filename>", 4)
         end
-    elseif args[1] == "edit" then
-        if args[2] then
-            launchEditor(args[2])
-        else
-            self:addContent("Usage: edit <filename>", 4)
-        end
     else
         self:addContent("Unknown command: " .. args[1], 4)
     end
 end
+
 
 return Terminal
